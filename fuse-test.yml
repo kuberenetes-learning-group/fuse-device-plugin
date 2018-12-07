@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: test-fuse
+  annotations:
+    container.apparmor.security.beta.kubernetes.io/test-fuse: localhost/docker-fuse 
+spec:
+  restartPolicy: OnFailure
+  imagePullSecrets:
+  - name: registry-secret
+  containers:
+  - image: image-registry:5000/ubuntu:16.04-sshfs
+    name: test-fuse 
+    command: ["sleep"]
+    args: ["100000"]
+    resources:
+      limits:
+        github.com/fuse: 1
+    securityContext:
+      capabilities:
+        add:
+        - SYS_ADMIN
