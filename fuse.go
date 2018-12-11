@@ -13,13 +13,14 @@ func check(err error) {
 	}
 }
 
-func getDevices() []*pluginapi.Device {
+func getDevices(number int) []*pluginapi.Device {
 	hostname, _ := os.Hostname()
-	devs := []*pluginapi.Device{
-		&pluginapi.Device{
-			ID:     fmt.Sprintf("fuse-%s", hostname),
+	devs := []*pluginapi.Device{}
+	for i := 0; i < number; i++ {
+		devs = append(devs, &pluginapi.Device{
+			ID:     fmt.Sprintf("fuse-%s-%d", hostname, i),
 			Health: pluginapi.Healthy,
-		},
+		})
 	}
 	return devs
 }

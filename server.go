@@ -29,9 +29,9 @@ type FuseDevicePlugin struct {
 	server *grpc.Server
 }
 
-func NewFuseDevicePlugin() *FuseDevicePlugin {
+func NewFuseDevicePlugin(number int) *FuseDevicePlugin {
 	return &FuseDevicePlugin{
-		devs:   getDevices(),
+		devs:   getDevices(number),
 		socket: serverSock,
 
 		stop:   make(chan interface{}),

@@ -11,8 +11,13 @@ spec:
   containers:
   - image: image-registry:5000/ubuntu:16.04-sshfs
     name: test-fuse 
-    command: ["sleep"]
-    args: ["100000"]
+    command:
+      - /bin/bash
+      - -c
+      - |2-
+        mkdir /mnt/test
+        echo "root\n" | sshfs -o allow_other root@10.0.0.62:/root
+        sleep 10000
     resources:
       limits:
         github.com/fuse: 1
