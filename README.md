@@ -1,5 +1,7 @@
 # fuse device plugin for Kubernetes
 
+> Inspired by @JasonChenY's [fuse-device-plugin](https://github.com/JasonChenY/fuse-device-plugin)
+
 This repository contains implementation of the [Kubernetes device plugin](https://github.com/kubernetes/community/blob/master/contributors/design-proposals/resource-management/device-plugin.md) alpha feature from version 1.8.
 
 ## Background
