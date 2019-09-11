@@ -9,7 +9,7 @@ spec:
   imagePullSecrets:
   - name: registry-secret
   containers:
-  - image: image-registry:5000/ubuntu:16.04-sshfs
+  - image: soolaugust/fuse-device-plugin:test-sshfs
     name: test-fuse 
     command:
       - /bin/bash

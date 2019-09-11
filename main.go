@@ -5,21 +5,22 @@ import (
 	"os"
 	"syscall"
 
-	"github.com/fsnotify/fsnotify"
-	pluginapi "k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1alpha1"
 	"flag"
+
+	"github.com/fsnotify/fsnotify"
+	pluginapi "k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1beta1"
 )
 
 var (
-	mounts_allowed = 5
+	mountsAllowed = 5
 )
 
 func main() {
-	flag.IntVar(&mounts_allowed, "mounts_allowed", 5, "maximum times the fuse device can be mounted")
+	flag.IntVar(&mountsAllowed, "mounts_allowed", 5, "maximum times the fuse device can be mounted")
 	flag.Parse()
 
 	log.Println("Starting")
-	defer func() { log.Println("Stopped:")}()
+	defer func() { log.Println("Stopped:") }()
 
 	log.Println("Starting FS watcher.")
 	watcher, err := newFSWatcher(pluginapi.DevicePluginPath)
@@ -42,7 +43,7 @@ L:
 				devicePlugin.Stop()
 			}
 
-			devicePlugin = NewFuseDevicePlugin(mounts_allowed)
+			devicePlugin = NewFuseDevicePlugin(mountsAllowed)
 			if err := devicePlugin.Serve(); err != nil {
 				log.Println("Could not contact Kubelet, retrying. Did you enable the device plugin feature gate?")
 			} else {

@@ -1,2 +1,2 @@
-FROM image-registry:5000/ubuntu:16.04-apt
-RUN apt-get update && apt-get install -y sshfs
+FROM ubuntu:16.04
+RUN apt-get update && apt-get install -y sshfs --allow-unauthenticated

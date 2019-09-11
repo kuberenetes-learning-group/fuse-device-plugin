@@ -3,7 +3,7 @@ package main
 import (
 	"log"
 	"os"
-	pluginapi "k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1alpha1"
+	pluginapi "k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1beta1"
 	"fmt"
 )
 

@@ -1,4 +1,4 @@
-FROM image-registry:5000/debian:stretch-slim
+FROM debian:stretch-slim
 
 COPY fuse-device-plugin /usr/bin/fuse-device-plugin
 

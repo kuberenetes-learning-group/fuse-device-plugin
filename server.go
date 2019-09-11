@@ -10,12 +10,14 @@ import (
 
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
-	pluginapi "k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1alpha1"
+	pluginapi "k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1beta1"
 )
 
 const (
-	resourceName = "github.com/fuse"
-	serverSock   = pluginapi.DevicePluginPath + "fuse.sock"
+	resourceName           = "github.com/fuse"
+	serverSock             = pluginapi.DevicePluginPath + "fuse.sock"
+	envDisableHealthChecks = "DP_DISABLE_HEALTHCHECKS"
+	allHealthChecks        = "xids"
 )
 
 // FuseDevicePlugin implements the Kubernetes device plugin API
@@ -37,6 +39,14 @@ func NewFuseDevicePlugin(number int) *FuseDevicePlugin {
 		stop:   make(chan interface{}),
 		health: make(chan *pluginapi.Device),
 	}
+}
+
+func (m *FuseDevicePlugin) GetDevicePluginOptions(context.Context, *pluginapi.Empty) (*pluginapi.DevicePluginOptions, error) {
+	return &pluginapi.DevicePluginOptions{}, nil
+}
+
+func (m *FuseDevicePlugin) PreStartContainer(context.Context, *pluginapi.PreStartContainerRequest) (*pluginapi.PreStartContainerResponse, error) {
+	return &pluginapi.PreStartContainerResponse{}, nil
 }
 
 // dial establishes the gRPC communication with the registered device plugin.
@@ -139,29 +149,30 @@ func (m *FuseDevicePlugin) unhealthy(dev *pluginapi.Device) {
 }
 
 // Allocate which return list of devices.
-func (m *FuseDevicePlugin) Allocate(ctx context.Context, r *pluginapi.AllocateRequest) (*pluginapi.AllocateResponse, error) {
+func (m *FuseDevicePlugin) Allocate(ctx context.Context, reqs *pluginapi.AllocateRequest) (*pluginapi.AllocateResponse, error) {
 	devs := m.devs
-	var response pluginapi.AllocateResponse
+	var responses pluginapi.AllocateResponse
 
-	for _, id := range r.DevicesIDs {
-		if !deviceExists(devs, id) {
-			return nil, fmt.Errorf("invalid allocation request: unknown device: %s", id)
+	for _, req := range reqs.ContainerRequests {
+		for _, id := range req.DevicesIDs {
+			if !deviceExists(devs, id) {
+				return nil, fmt.Errorf("invalid allocation request: unknown device: %s", id)
+			}
+
+			response := new(pluginapi.ContainerAllocateResponse)
+			response.Devices = []*pluginapi.DeviceSpec{
+				&pluginapi.DeviceSpec{
+					ContainerPath: "/dev/fuse",
+					HostPath:      "/dev/fuse",
+					Permissions:   "rwm",
+				},
+			}
+
+			responses.ContainerResponses = append(responses.ContainerResponses, response)
 		}
-
-		devRuntime := new(pluginapi.DeviceRuntimeSpec)
-		devRuntime.ID = id
-		devRuntime.Devices = []*pluginapi.DeviceSpec{
-			&pluginapi.DeviceSpec {
-				ContainerPath: "/dev/fuse",
-				HostPath: "/dev/fuse",
-				Permissions: "rwm",
-			},
-		}
-
-		response.Spec = append(response.Spec, devRuntime)
 	}
 
-	return &response, nil
+	return &responses, nil
 }
 
 func (m *FuseDevicePlugin) cleanup() error {
