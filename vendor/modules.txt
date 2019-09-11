@@ -1,0 +1,44 @@
+# github.com/fsnotify/fsnotify v0.0.0-20170329110642-4da3e2cfbabc
+github.com/fsnotify/fsnotify
+# github.com/gogo/protobuf v1.3.0
+github.com/gogo/protobuf/gogoproto
+github.com/gogo/protobuf/proto
+github.com/gogo/protobuf/sortkeys
+github.com/gogo/protobuf/protoc-gen-gogo/descriptor
+# github.com/golang/protobuf v0.0.0-20170919002109-ae59567b9aab
+github.com/golang/protobuf/proto
+github.com/golang/protobuf/ptypes/any
+# golang.org/x/net v0.0.0-20170915142106-8351a756f30f
+golang.org/x/net/context
+golang.org/x/net/http2
+golang.org/x/net/trace
+golang.org/x/net/http2/hpack
+golang.org/x/net/idna
+golang.org/x/net/lex/httplex
+golang.org/x/net/internal/timeseries
+# golang.org/x/sys v0.0.0-20170927054621-314a259e304f
+golang.org/x/sys/unix
+# golang.org/x/text v0.0.0-20170915090833-1cbadb444a80
+golang.org/x/text/secure/bidirule
+golang.org/x/text/unicode/norm
+golang.org/x/text/transform
+golang.org/x/text/unicode/bidi
+# google.golang.org/genproto v0.0.0-20170918111702-1e559d0a00ee
+google.golang.org/genproto/googleapis/rpc/status
+# google.golang.org/grpc v1.5.0
+google.golang.org/grpc
+google.golang.org/grpc/codes
+google.golang.org/grpc/credentials
+google.golang.org/grpc/grpclb/grpc_lb_v1
+google.golang.org/grpc/grpclog
+google.golang.org/grpc/internal
+google.golang.org/grpc/keepalive
+google.golang.org/grpc/metadata
+google.golang.org/grpc/naming
+google.golang.org/grpc/peer
+google.golang.org/grpc/stats
+google.golang.org/grpc/status
+google.golang.org/grpc/tap
+google.golang.org/grpc/transport
+# k8s.io/kubernetes v1.14.6
+k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1beta1
