@@ -22,8 +22,16 @@ kubelet -h | grep "DevicePlugins"
 
 ## 部署:
 
+* kubernete version < 1.16
+
 ```bash
 kubectl create -f fuse-device-plugin.yml
+```
+
+* kubernete version > 1.16
+
+```
+kubectl create -f fuse-device-plugin-k8s-1.16.yml
 ```
 
 ## 使用

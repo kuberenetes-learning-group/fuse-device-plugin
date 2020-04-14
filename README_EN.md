@@ -18,8 +18,17 @@ Please make sure that the Kubelet has been started with the `--feature-gates=Dev
 before running the device plugin.
 
 #### Deploy as Daemon Set:
-```
+
+* kubernete version < 1.16
+
+```bash
 kubectl create -f fuse-device-plugin.yml
+```
+
+* kubernete version > 1.16
+
+```
+kubectl create -f fuse-device-plugin-k8s-1.16.yml
 ```
 
 #### Run locally
