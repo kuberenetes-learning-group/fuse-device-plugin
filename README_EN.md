@@ -31,8 +31,16 @@ kubectl create -f fuse-device-plugin.yml
 kubectl create -f fuse-device-plugin-k8s-1.16.yml
 ```
 
-#### Run locally
-```shell
-./k8s-device-plugin
+#### Deploy
+
+Refer to [fuse-test.yml](fuse-test.yml)
+
+```yaml
+spec: 
+  containers:
+  - ...
+    resources:
+      limits:
+        github.com/fuse: 1
 ```
 
