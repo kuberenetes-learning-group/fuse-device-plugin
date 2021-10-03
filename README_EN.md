@@ -44,3 +44,7 @@ spec:
         github.com/fuse: 1
 ```
 
+
+# Thanks
+
+![Goland](https://blog.jetbrains.com/wp-content/uploads/2019/01/goland_icon.svg)
