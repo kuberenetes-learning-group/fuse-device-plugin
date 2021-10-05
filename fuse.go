@@ -1,17 +1,17 @@
 package main
 
 import (
-	"log"
-	"os"
-	pluginapi "k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1beta1"
 	"fmt"
+	"os"
+
+	pluginapi "k8s.io/kubernetes/pkg/kubelet/apis/deviceplugin/v1beta1"
 )
 
-func check(err error) {
-	if err != nil {
-		log.Panicln("Fatal:", err)
-	}
-}
+// func check(err error) {
+// 	if err != nil {
+// 		log.Panicln("Fatal:", err)
+// 	}
+// }
 
 func getDevices(number int) []*pluginapi.Device {
 	hostname, _ := os.Hostname()
@@ -33,4 +33,3 @@ func deviceExists(devs []*pluginapi.Device, id string) bool {
 	}
 	return false
 }
-

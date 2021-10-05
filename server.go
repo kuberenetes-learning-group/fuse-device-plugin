@@ -144,9 +144,9 @@ func (m *FuseDevicePlugin) ListAndWatch(e *pluginapi.Empty, s pluginapi.DevicePl
 	}
 }
 
-func (m *FuseDevicePlugin) unhealthy(dev *pluginapi.Device) {
-	m.health <- dev
-}
+// func (m *FuseDevicePlugin) unhealthy(dev *pluginapi.Device) {
+// 	m.health <- dev
+// }
 
 // Allocate which return list of devices.
 func (m *FuseDevicePlugin) Allocate(ctx context.Context, reqs *pluginapi.AllocateRequest) (*pluginapi.AllocateResponse, error) {
@@ -161,7 +161,7 @@ func (m *FuseDevicePlugin) Allocate(ctx context.Context, reqs *pluginapi.Allocat
 
 			response := new(pluginapi.ContainerAllocateResponse)
 			response.Devices = []*pluginapi.DeviceSpec{
-				&pluginapi.DeviceSpec{
+				{
 					ContainerPath: "/dev/fuse",
 					HostPath:      "/dev/fuse",
 					Permissions:   "rwm",
@@ -184,11 +184,8 @@ func (m *FuseDevicePlugin) cleanup() error {
 }
 
 func (m *FuseDevicePlugin) healthcheck() {
-	for {
-		select {
-		case <-m.stop:
-			return
-		}
+	for range m.stop {
+		return
 	}
 }
 
